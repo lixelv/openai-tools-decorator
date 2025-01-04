@@ -10,7 +10,7 @@ class OpenAIT(OpenAI):
         self.open_ai_tools = []
         self.tools = {}
 
-    def add_tool(self, tool_details):
+    def add_tool(self, tool_details: dict):
         def decorator(func):
             # Присваиваем имя функции инструменту
             tool_details["name"] = func.__name__
@@ -21,6 +21,15 @@ class OpenAIT(OpenAI):
             return func
 
         return decorator
+
+    def remove_tool(self, tool_name: str):
+        if tool_name not in self.tools:
+            raise ValueError(f"Функция {tool_name} не найдена")
+
+        self.open_ai_tools = [
+            tool for tool in self.open_ai_tools if tool["function"]["name"] != tool_name
+        ]
+        del self.tools[tool_name]
 
     async def run_tool(self, tool_name: str, **kwargs) -> str:
         func = self.tools.get(tool_name)
