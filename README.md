@@ -1,6 +1,6 @@
 # openai_tools_decorator
 
-A lightweight Python library that streamlines creating and invoking “tools” (functions) in your OpenAI ChatCompletion-based projects. It lets you register and call both **synchronous** and **asynchronous** functions via decorators.
+A lightweight Python library that streamlines creating and invoking “tools” (functions) in your OpenAI ChatCompletion-based projects. It lets you register and call both **synchronous** and **asynchronous** functions via decorators, а теперь еще и удалять ненужные.
 
 ## Installation
 
@@ -20,8 +20,6 @@ client = OpenAIT()
 
 ### 2. Adding Tools
 
-Wrap your function (sync or async) with `@client.add_tool(...)`. The decorator registers it and provides a JSON Schema describing the function’s parameters:
-
 ```python
 @client.add_tool(
     {
@@ -36,13 +34,10 @@ Wrap your function (sync or async) with `@client.add_tool(...)`. The decorator r
     }
 )
 def get_weather(city: str):
-    # Or async def get_weather(...) if you prefer
     return f"Weather in {city}: 25°C"
 ```
 
 ### 3. Using Tools with Chat
-
-When you call `run_with_tool(...)` or `run_with_tool_by_thread_id(...)`, the ChatCompletion model can opt to invoke any matching tool. For example:
 
 ```python
 user_input = "How cold is it in Moscow right now?"
@@ -53,6 +48,16 @@ response = await client.run_with_tool(
 )
 print(response)  # The assistant’s response, possibly including a tool call
 ```
+
+### 4. Removing Tools
+
+Чтобы убрать зарегистрированный инструмент, вызови `remove_tool` с именем функции:
+
+```python
+client.remove_tool("get_weather")
+```
+
+Если функции нет, будет брошен `ValueError`.
 
 ## Example
 
@@ -98,9 +103,10 @@ asyncio.run(main())
 
 ## Key Points
 
--   You can decorate **both synchronous and asynchronous** functions.
--   Tools get automatically registered and described for the OpenAI model.
--   The model decides whether or not to call your tool during the conversation.
+-   Ты можешь декорировать **синхронные и асинхронные** функции.
+-   Инструменты автоматически регистрируются и описываются для OpenAI-модели.
+-   Модель сама решает, вызывать ли инструмент во время диалога.
+-   Можно быстро убирать ненужные инструменты через `remove_tool`.
 
 ## License
 
