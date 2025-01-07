@@ -1,6 +1,6 @@
 # openai_tools_decorator
 
-A lightweight Python library that streamlines creating and invoking “tools” (functions) in your OpenAI ChatCompletion-based projects. It lets you register and call both **synchronous** and **asynchronous** functions via decorators, а теперь еще и удалять ненужные.
+A lightweight Python library that streamlines creating and invoking “tools” (functions) in your OpenAI ChatCompletion-based projects. It lets you register and call both **synchronous** and **asynchronous** functions via decorators.
 
 ## Installation
 
@@ -51,13 +51,13 @@ print(response)  # The assistant’s response, possibly including a tool call
 
 ### 4. Removing Tools
 
-Чтобы убрать зарегистрированный инструмент, вызови `remove_tool` с именем функции:
+To remove a tool, use `remove_tool` with function's name as an argument:
 
 ```python
 client.remove_tool("get_weather")
 ```
 
-Если функции нет, будет брошен `ValueError`.
+If the tool is not found, `remove_tool` will raise `ValueError`.
 
 ## Example
 
@@ -103,10 +103,10 @@ asyncio.run(main())
 
 ## Key Points
 
--   Ты можешь декорировать **синхронные и асинхронные** функции.
--   Инструменты автоматически регистрируются и описываются для OpenAI-модели.
--   Модель сама решает, вызывать ли инструмент во время диалога.
--   Можно быстро убирать ненужные инструменты через `remove_tool`.
+-   You can register **sync and async ** functions.
+-   Tools are automatically registered and described for the OpenAI model.
+-   The model decides whether to call a tool during the dialogue.
+-   You can quickly remove unnecessary tools using `remove_tool`.
 
 ## License
 
