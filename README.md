@@ -24,13 +24,6 @@ client = OpenAIT()
 @client.add_tool(
     {
         "description": "Get current weather for a city",
-        "parameters": {
-            "type": "object",
-            "properties": {
-                "city": {"type": "string", "description": "The city name in English"}
-            },
-            "required": ["city"]
-        },
     }
 )
 def get_weather(city: str):
@@ -77,16 +70,6 @@ async def fetch_url(url):
 @client.add_tool(
     {
         "description": "Fetch weather from an API",
-        "parameters": {
-            "type": "object",
-            "properties": {
-                "city": {
-                    "type": "string",
-                    "description": "The city name in English"
-                }
-            },
-            "required": ["city"]
-        },
     }
 )
 async def get_weather(city: str):
